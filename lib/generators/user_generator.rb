@@ -107,12 +107,12 @@ FILE
   end
 FILE
     end
-
+  pre=model_name if model_name!='user'
   inject_into_file "config/routes.rb", before:"resources :#{model_name.pluralize}" do
     <<-FILE
 
-  get '/sign_in'=>'#{model_name.pluralize}#sign_in', as:'#{model_name}_sign_in'
-  post '/login'=>'#{model_name.pluralize}#login', as:'#{model_name}_login'
+  get '#{pre}/sign_in'=>'#{model_name.pluralize}#sign_in', as:'#{model_name}_sign_in'
+  post '#{pre}/login'=>'#{model_name.pluralize}#login', as:'#{model_name}_login'
 
   FILE
   end
