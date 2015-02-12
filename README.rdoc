@@ -6,7 +6,7 @@ This project rocks and uses MIT-LICENSE.
 
 Is not complite product!
 
-==What is?
+==What is it?
 Is a simply generator for secure model of user, very simple.
 
 model name can be changed, default is 'user'.
