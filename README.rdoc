@@ -30,7 +30,11 @@ add `gem secure_user ,:git => 'https://github.com/nottewae/secure_user'`
 
 2 use generator
 `rails generate user`
-and generater asked you all other params
+and generater asked you for all other params
+* model name
+* login field name
+* additional fields
+* security key for encrypt password
 
 tested on rails 4.2.0
 
