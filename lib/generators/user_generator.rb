@@ -32,6 +32,8 @@ class UserGenerator < Rails::Generators::Base
     model_name = "user" if model_name.blank?
     login_field_name = ask("Field name for login? [login]")
     login_field_name = "login" if login_field_name.blank?
+    templater=ask("your templater? [slim]     (view sign_in generating only for slim^ write all other for cancel generation this view)")
+    templater = "slim" if templater.blank?
     model_exists= File.exist?("app/models/#{model_name}.rb")
 
 
@@ -114,6 +116,7 @@ FILE
 
   FILE
   end
+    if templater=="slim"
     create_file "app/views/#{model_name.pluralize}/sign_in.html.slim",<<-FILE
 = form_for :#{model_name}, url:#{model_name}_login_path do |f|
   .form-group
@@ -125,7 +128,8 @@ FILE
   .form-group
     =f.submit 'Sign In',class:"btn btn-success"
     FILE
-  end
+    end
+    end
 
 
 
