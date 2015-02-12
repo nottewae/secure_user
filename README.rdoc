@@ -26,7 +26,9 @@ until it all
 How to use
 
 1 install gem 
-add <tt>gem secure_user ,:git => 'https://github.com/nottewae/secure_user'</tt>
+add <tt>gem secure_user ,:git => '
+#https://github.com/nottewae/secure_user
+'</tt>
 
 2 use generator
 <tt>rails generate user</tt>
