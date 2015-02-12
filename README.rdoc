@@ -26,10 +26,10 @@ until it all
 How to use
 
 1 install gem 
-add +gem secure_user ,:git => 'https://github.com/nottewae/secure_user'+
+add <tt>gem secure_user ,:git => 'https://github.com/nottewae/secure_user'</tt>
 
 2 use generator
-+rails generate user+
+<tt>rails generate user</tt>
 and generater asked you for all other params
 * model name
 * login field name
