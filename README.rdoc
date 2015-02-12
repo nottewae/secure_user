@@ -39,7 +39,7 @@ and generater asked you for all other params
 tested on rails 4.2.0
 
 ==warning!
-if model name math with you existing model
+if model`s name math with you existing model
 
 your existing model has droped with all data!!!!
 
