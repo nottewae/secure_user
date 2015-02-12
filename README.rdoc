@@ -2,3 +2,47 @@
 
 This project rocks and uses MIT-LICENSE.
 
+=This is pre pre alfa version!
+
+Is not complite product!
+
+==What is?
+Is a simply generator for secure model of user, very simple.
+
+model name can be changed, default is 'user'.
+
+model has fields:
+* login (Can be changed)
+* salt
+* password
+* and any other fields (type in process)
+
+and make model with crypting password
+
+make scaffold for model and sign_in page and action and adding specific routes
+
+until it all
+
+How to use
+
+1 install gem 
+add (({gem secure_user ,:git => 'https://github.com/nottewae/secure_user'}))
+
+2 use generator
+(({rails generate user}))
+and generater asked you for all other params
+* model name
+* login field name
+* additional fields
+* security key for encrypt password
+
+tested on rails 4.2.0
+
+==warning!
+if model name math with you existing model
+
+your existing model has droped with all data!!!!
+
+
+
+
