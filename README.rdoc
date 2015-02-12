@@ -15,7 +15,7 @@ model has fields:
 * login (Can be changed)
 * salt
 * password
-* and any other fields (type in process)
+* and any other fields (type in generating process)
 
 and make model with crypting password
 
