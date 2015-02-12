@@ -97,13 +97,21 @@ FILE
 
   end
   def login
+    logged_in=false
     @#{model_name}=#{model_name.capitalize}.find_by_#{login_field_name} #{model_name}_params[:#{login_field_name}]
-    if @#{model_name}.login?(#{model_name}_params[:password])
-      redirect_to :sign_in
-    else
-      #TODO Your action after login
-      render text:"Success"
+    logged_in = true if @#{model_name}.login?(#{model_name}_params[:password])
+    respond_to do |format|
+      format.html do
+        unless logged_in
+          redirect_to :sign_in
+        else
+          #TODO Your action after login
+          render text:"Success"
+        end
+      end
+      format.json {render json:{result:logged_in ? true : false}}
     end
+
   end
 FILE
     end
