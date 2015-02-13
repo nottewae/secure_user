@@ -119,7 +119,7 @@ FILE
 FILE
     end
   puts "removing salt in views".yellow
-  gsub_file "app/views/#{model_name.pluralize}/_form.html.slim", /([^\n]*\n?[^\n]{1,}f\.label\s:salt[\w\W\d\s]{1,}f\.text_field :salt[^\n]*\n)/, '\n'
+  gsub_file "app/views/#{model_name.pluralize}/_form.html.slim", /([^\n]*\n?[^\n]{1,}f\.label\s:salt[\w\W\d\s]{1,}f\.text_field :salt[^\n]*\n)/, ''
   pre=model_name if model_name!='user'
   puts "injecting routes".yellow
   puts "#{pre}/sign_in'=>'#{model_name.pluralize}#sign_in', as:'#{model_name}_sign_in".green
