@@ -65,12 +65,16 @@ FILE
       rake "db:migrate"
     end
     other_fields=ask("Do You want adding more fields in model (as generator example:'field:integer:index other_filed:string') if no just press enter?")
+    puts "generating standart scaffold for model".yellow
     generate "scaffold #{model_name}  #{login_field_name}:string:index password:string salt:string #{other_fields} --skip"
+    puts "generating migration for model".yellow
     generate "migration add_timestamps_to#{model_name}"
-    puts "migration file name", model_exists
+
+    puts "run migrations".yellow
     rake "db:migrate"
     password_mix_key = ask("Your secret key for password generation? [___-o-!-o-___]")
     password_mix_key="___----___" if password_mix_key.blank?
+    puts "injecting in #{model_name.capitalize} model security methods".yellow
     inject_into_file "app/models/#{model_name}.rb", after:"class #{model_name.capitalize} < ActiveRecord::Base" do
       <<-FILE
 
@@ -89,12 +93,12 @@ FILE
     end
 FILE
     end
-
-    inject_into_file "app/controllers/#{model_name.pluralize}_controller.rb", after:"before_action :set_admin, only: [:show, :edit, :update, :destroy, :login]" do
+  puts "injecting action in #{model_name.pluralize.capitalize} controller".yellow
+    inject_into_file "app/controllers/#{model_name.pluralize}_controller.rb", after:"before_action :set_#{model_name}, only: [:show, :edit, :update, :destroy]" do
       <<-FILE
 
   def sign_in
-
+    @#{model_name}=#{model_name.capitalize}.new
   end
   def login
     logged_in=false
@@ -111,11 +115,16 @@ FILE
       end
       format.json {render json:{result:logged_in ? true : false}}
     end
-
   end
 FILE
     end
+  puts "removing salt in views".yellow
+  gsub_file "app/views/#{model_name.pluralize}/_form.html.slim", /([^\n]*\n?[^\n]{1,}f\.label\s:salt[\w\W\d\s]{1,}f\.text_field :salt[^\n]*\n)/, '\n'
   pre=model_name if model_name!='user'
+  puts "injecting routes".yellow
+  puts "#{pre}/sign_in'=>'#{model_name.pluralize}#sign_in', as:'#{model_name}_sign_in".green
+  puts "#{pre}/login'=>'#{model_name.pluralize}#login', as:'#{model_name}_login".green
+  puts "---------".yellow
   inject_into_file "config/routes.rb", before:"resources :#{model_name.pluralize}" do
     <<-FILE
 
@@ -124,9 +133,10 @@ FILE
 
   FILE
   end
+  puts "creating view for sign in page".yellow
     if templater=="slim"
     create_file "app/views/#{model_name.pluralize}/sign_in.html.slim",<<-FILE
-= form_for :#{model_name}, url:#{model_name}_login_path do |f|
+= form_for @#{model_name}, url:#{model_name}_login_path do |f|
   .form-group
     =f.label :#{login_field_name}, '#{login_field_name.capitalize}'
     =f.text_field :#{login_field_name},class:'form-group'
@@ -137,10 +147,5 @@ FILE
     =f.submit 'Sign In',class:"btn btn-success"
     FILE
     end
-    end
-
-
-
-
-
+  end
 end
